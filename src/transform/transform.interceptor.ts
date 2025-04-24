@@ -1,17 +1,23 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+} from '@nestjs/common';
 import { Observable } from 'rxjs';
-import {map} from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class TransformInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
-      map((data)=>{
+      map((data) => {
         return {
-          code:0,
-          data
-        }
-      })
+          code: 0,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          data,
+        };
+      }),
     );
   }
 }

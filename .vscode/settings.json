@@ -1,5 +1,10 @@
 {
     "cSpell.words": [
         "nestdb"
-    ]
+    ],
+
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always"
+    }
+
 }

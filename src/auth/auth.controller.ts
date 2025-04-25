@@ -15,7 +15,7 @@ export class AuthController {
     return await this.authService.login(username, password);
   }
 
-  @Get('userInfo')
+  @Get('profile')
   async getUserInfo(@Request() req) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await req.user;

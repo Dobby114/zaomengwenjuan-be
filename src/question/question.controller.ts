@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   Request,
@@ -69,5 +70,10 @@ export class QuestionController {
   duplicateOne(@Param('id') id: string, @Request() req) {
     const userId = (req?.user?._id as string) || '';
     return this.questionService.duplicate(id, userId);
+  }
+
+  @Patch(':id')
+  updateOne(@Param('id') id: string, @Body() bodyData) {
+    return this.questionService.update(id, bodyData);
   }
 }

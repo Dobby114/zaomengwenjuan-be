@@ -10,7 +10,7 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  async login(@Body() userInfo: createUserDto) {
+  async login(@Body('data') userInfo: createUserDto) {
     const { username, password } = userInfo;
     return await this.authService.login(username, password);
   }

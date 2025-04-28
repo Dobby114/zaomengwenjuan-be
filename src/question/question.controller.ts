@@ -50,18 +50,24 @@ export class QuestionController {
     return this.questionService.create(userId, question);
   }
   @Get(':id')
-  findOne(@Param() params: { id: string }) {
-    return this.questionService.findOne(params?.id);
+  findOne(@Param('id') id: string) {
+    return this.questionService.findOne(id);
   }
   @Delete(':id')
-  deleteOne(@Param() params: { id: string }, @Request() req) {
+  deleteOne(@Param('id') id: string, @Request() req) {
     const userId = (req?.user?._id as string) || '';
-    return this.questionService.deleteOne(params.id, userId);
+    return this.questionService.deleteOne(id, userId);
   }
   @Delete()
   deleteMany(@Body() body, @Request() req) {
     const userId = (req?.user?._id as string) || '';
-    const { idList } = body;
+    const { idList = [] } = body;
     return this.questionService.deleteMany(idList, userId);
+  }
+
+  @Post('duplicate/:id')
+  duplicateOne(@Param('id') id: string, @Request() req) {
+    const userId = (req?.user?._id as string) || '';
+    return this.questionService.duplicate(id, userId);
   }
 }

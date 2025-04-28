@@ -4,6 +4,8 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Question } from './schemas/question.schema';
 import { Model } from 'mongoose';
+import mongoose from 'mongoose';
+import { nanoid } from 'nanoid';
 
 @Injectable()
 export class QuestionService {
@@ -13,7 +15,7 @@ export class QuestionService {
   ) {}
   async create(userId: string, questionInfo: Question) {
     const question = new this.questionModel({ userId, ...questionInfo });
-    return question.save();
+    return await question.save();
   }
   // 查询问卷列表  分页  模糊搜索
   async findQuestionList({
@@ -89,5 +91,38 @@ export class QuestionService {
       _id: { $in: idList },
       userId,
     });
+  }
+
+  //
+  // 复制问卷
+  async duplicate(questionId: string, userId: string) {
+    const question = await this.questionModel.findById(questionId);
+    function handleComponentList(componentList: Array<object>) {
+      if (componentList.length === 0) {
+        return componentList;
+      }
+      const newComponentList = componentList.map((item) => {
+        return {
+          ...item,
+          fe_id: nanoid(5),
+        };
+      });
+      return newComponentList;
+    }
+    const newQuestion = new this.questionModel({
+      ...question.toObject(),
+      _id: new mongoose.Types.ObjectId(),
+      title: question?.title + '副本',
+      userId,
+      isPublished: false,
+      isStar: false,
+      isDeleted: false,
+      componentList: handleComponentList(question?.componentList),
+    });
+    return await newQuestion.save();
+  }
+  // 更新问卷
+  async update(id: string, updateData) {
+    return await this.questionModel.updateOne({ _id: id }, updateData);
   }
 }

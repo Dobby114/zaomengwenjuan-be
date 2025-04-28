@@ -9,8 +9,9 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
   @Public()
   @Post('register')
-  async create(@Body() userBto: createUserDto) {
+  async create(@Body('data') userBto: createUserDto) {
     try {
+      console.log(userBto);
       return await this.userService.create(userBto);
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
@@ -22,7 +23,7 @@ export class UserController {
   login() {
     return;
   }
-  @Get('userInfo')
+  @Get()
   @Redirect('/api/auth/profile', 302) //post临时重定向----302；永久重定向----301
   getUserInfo() {
     return;

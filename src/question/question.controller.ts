@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { Question } from './schemas/question.schema';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('question')
 export class QuestionController {
@@ -43,13 +44,15 @@ export class QuestionController {
       isStar,
     });
 
-    return { list, count: allCount };
+    return { list, total: allCount };
   }
   @Post()
   cerate(@Body() question: Question, @Request() req) {
     const userId = (req?.user?._id as string) || '';
     return this.questionService.create(userId, question);
   }
+
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.questionService.findOne(id);

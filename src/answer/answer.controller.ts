@@ -13,7 +13,7 @@ export class AnswerController {
     @Body()
     bodyData: answerType,
   ) {
-    console.log(bodyData);
+    // console.log(bodyData);
     return this.answerService.create(bodyData);
   }
 }

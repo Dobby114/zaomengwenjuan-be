@@ -10,6 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       { name: Question.name, schema: QuestionSchema },
     ]),
   ],
+  exports: [QuestionService],
   controllers: [QuestionController],
   providers: [QuestionService],
 })

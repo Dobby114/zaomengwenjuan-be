@@ -10,6 +10,27 @@ export class StatService {
     private readonly answerService: AnswerService,
     private readonly questionService: QuestionService,
   ) {}
+
+  _genRadioText(value, props) {
+    const {
+      options = [] as Array<{
+        label: string;
+        value: string;
+        checked?: boolean;
+      }>,
+    } = props;
+    if (typeof value !== 'string') {
+      const targetLabeList = value.map((val) => {
+        const targetOption = options.find((item) => item.value === val);
+        return targetOption?.label;
+      });
+      return targetLabeList.toString();
+    } else {
+      const targetOption = options.find((item) => item.value === value);
+      if (!targetOption) return;
+      return targetOption.label;
+    }
+  }
   //   分页获取单个问卷答卷列表
 
   // _genAnswerList(questionId: string, answerList: Array) {}
@@ -32,11 +53,22 @@ export class StatService {
     );
     const list = answers.map((item) => {
       const answerList = item.get('answerList') as answerType['answerList'];
+      const questionList = q.get('componentList');
       const _id = item.get('_id') as string;
       const transformedAnswers = {};
       answerList.forEach((item) => {
         const { componentId, value } = item;
-        transformedAnswers[componentId] = value;
+        const question = questionList.find(
+          (item) => item.fe_id === componentId,
+        );
+        if (question.type === 'questionRadio') {
+          const text = this._genRadioText(value, question.props);
+          transformedAnswers[componentId] = text;
+        } else if (question.type === 'questionCheckbox') {
+          const valueList = value.split(',');
+          const text = this._genRadioText(valueList, question.props);
+          transformedAnswers[componentId] = text;
+        }
       });
 
       return { _id, ...transformedAnswers };
@@ -44,19 +76,6 @@ export class StatService {
     return { list, total };
   }
 
-  _genRadioText(value, props) {
-    const {
-      options = [] as Array<{
-        label: string;
-        value: string;
-        checked?: boolean;
-      }>,
-    } = props;
-    const targetOption = options.find((item) => item.value === value);
-    // console.log(options, value);
-    if (!targetOption) return;
-    return targetOption.label;
-  }
   // 统计所有答卷中某个组件的数据（只统计单选和多选的组件）
   // 数据格式：{name:string,count:number}[]
   async genComponentStat(questionId: string, componentId: string) {
@@ -105,7 +124,7 @@ export class StatService {
     });
     // 整理数据
     const stat = [];
-    console.log(targetAnswer);
+    // console.log(targetAnswer);
     for (const val in targetAnswer) {
       // if (type === 'questionRadio') {
       //   const text = this._genRadioText(val, props);

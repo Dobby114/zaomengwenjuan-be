@@ -19,6 +19,7 @@ export default async function handler(req, res) {
   app.useGlobalFilters(new HttpExceptionFilter()); //全局过滤器
   app.enableCors(); //  允许跨域
   // await app.listen(3005); //路由端口 serverless 不需要指定端口??
+  await app.listen(3005, '0.0.0.0');
  
     const config = new DocumentBuilder()
       .setTitle('EasyNotes API')

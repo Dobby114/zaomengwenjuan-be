@@ -22,7 +22,7 @@
         "PATCH"
       ],
       "headers": {
-        "Access-Control-Allow-Origin": "https://wenjuanxing-fe.vercel.app",
+        "Access-Control-Allow-Origin": "https://zaomengwenjuan-fe.vercel.app",
         "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,PATCH,OPTIONS"
       }
     }

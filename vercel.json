@@ -2,21 +2,29 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.js",
-      "use": "@vercel/node"
+      "src": "src/main.ts",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["dist/**"]
+      }
     }
   ],
-  "routes": [
+    "routes": [
     {
       "src": "/(.*)",
-      "dest": "api/index.js",
+      "dest": "src/main.ts",
       "methods": [
+        "OPTIONS",
         "GET",
         "POST",
         "PUT",
         "DELETE",
         "PATCH"
-      ]
+      ],
+      "headers": {
+        "Access-Control-Allow-Origin": "https://wenjuanxing-fe.vercel.app",
+        "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,PATCH,OPTIONS"
+      }
     }
   ]
 }

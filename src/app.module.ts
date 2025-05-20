@@ -13,7 +13,7 @@ import { StatModule } from './stat/stat.module';
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(
-      `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DATABASE}`,
+      `${process.env.MONGO_HOST}${process.env.MONGO_DATABASE}`,
     ),
     QuestionModule,
     UserModule,

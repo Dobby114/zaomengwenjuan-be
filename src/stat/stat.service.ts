@@ -72,6 +72,8 @@ export class StatService {
           const valueList = value.split(',');
           const text = this._genRadioText(valueList, question.props);
           transformedAnswers[componentId] = text;
+        } else {
+          transformedAnswers[componentId] = value;
         }
       });
 

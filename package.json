@@ -29,6 +29,7 @@
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/mongoose": "^11.0.3",
     "@nestjs/platform-express": "^11.0.1",
+    "mockjs": "^1.1.0",
     "mongoose": "^8.13.2",
     "nanoid": "^3.3.11",
     "reflect-metadata": "^0.2.2",

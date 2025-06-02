@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { AnswerModule } from './answer/answer.module';
 import { StatModule } from './stat/stat.module';
+import { SseModule } from './sse/sse.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { StatModule } from './stat/stat.module';
     AuthModule,
     AnswerModule,
     StatModule,
+    SseModule,
   ],
   controllers: [AppController],
   providers: [AppService],

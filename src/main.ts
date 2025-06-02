@@ -10,6 +10,7 @@ async function bootstrap() {
       'https://zaomengwenjuan-fe.vercel.app',
       'https://zaomengwenjuan-cside.vercel.app',
       'http://localhost:8000',
+      'http://localhost:3000',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // 允许的 HTTP 方法
     // allowedHeaders: 'Content-Type,Authorization', // 允许的请求头
